@@ -28,6 +28,21 @@ variable "storage_container_name" {
   default = null
 }
 
+variable "virtual_network_name" {
+  type = string
+  default = null
+}
+
+variable "subnet_name" {
+  type = string
+  default = null
+}
+
+variable "azuread_user_name" {
+  type = string
+  default = null
+}
+
 ## MODULES
 
 variable "keyvault" {
@@ -213,6 +228,10 @@ variable "mssql_job_agent" {
 variable "mssql_job_credential" {
   type = list(object({
     id = any
+    job_agent_id = any
+    name         = string
+    password     = string
+    username     = string
   }))
   default = []
 }
@@ -220,6 +239,19 @@ variable "mssql_job_credential" {
 variable "mssql_managed_database" {
   type = list(object({
     id = any
+    managed_instance_id = any
+    name                = string
+    short_term_retention_days = optional(number)
+    long_term_retention_policy = optional(list(object({
+      weekly_retention = any
+      monthly_retention = any
+      yearly_retention = any
+      week_of_year = any
+    })))
+    point_in_time_restore = optional(list(object({
+      restore_point_in_time = any
+      source_database_id = any
+    })))
   }))
   default = []
 }
@@ -227,6 +259,13 @@ variable "mssql_managed_database" {
 variable "mssql_managed_instance" {
   type = list(object({
     id = any
+    administrator_login = string
+    administrator_login_password = string
+    license_type = string
+    name = string
+    sku_name = string
+    storage_size_in_gb = string
+    vcores = string
   }))
   default = []
 }
@@ -234,6 +273,9 @@ variable "mssql_managed_instance" {
 variable "mssql_managed_instance_active_directory_administrator" {
   type = list(object({
     id = any
+    login_username      = string
+    managed_instance_id = any
+    azuread_authentication_only = optional(bool)
   }))
   default = []
 }
@@ -241,6 +283,15 @@ variable "mssql_managed_instance_active_directory_administrator" {
 variable "mssql_managed_instance_failover_group" {
   type = list(object({
     id = any
+    managed_instance_id         = any
+    name                        = string
+    partner_managed_instance_id = any
+    readonly_endpoint_failover_policy_enabled = optional(bool)
+    secondary_type = optional(string)
+    read_write_endpoint_failover_policy = optional(list(object({
+      mode = string
+      grace_minutes = optional(string)
+    })))
   }))
   default = []
 }

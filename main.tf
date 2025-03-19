@@ -182,46 +182,76 @@ resource "azurerm_mssql_job_agent" "this" {
 
 resource "azurerm_mssql_job_credential" "this" {
   count        = length(var.mssql_job_agent) == 0 ? 0 : length(var.mssql_job_credential)
-  job_agent_id = ""
-  name         = ""
-  password     = ""
-  username     = ""
+  job_agent_id = element(azurerm_mssql_job_agent.this.*.id, lookup(var.mssql_job_agent[count.index], "job_agent_id"))
+  name         = lookup(var.mssql_job_credential[count.index], "name")
+  password     = lookup(var.mssql_job_credential[count.index], "password")
+  username     = lookup(var.mssql_job_credential[count.index], "username")
 }
 
 resource "azurerm_mssql_managed_database" "this" {
   count               = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_database)
-  managed_instance_id = ""
-  name                = ""
+  managed_instance_id = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_database[count.index], "managed_instance_id"))
+  name                = lookup(var.mssql_managed_database[count.index], "name")
+  short_term_retention_days = lookup(var.mssql_managed_database[count.index], "short_term_retention_days")
+
+  
+  dynamic "long_term_retention_policy" {
+    for_each = try(lookup(var.mssql_managed_database[count.index], "long_term_retention_policy") == null ? [] : ["long_term_retention_policy"])
+    content {
+      weekly_retention = lookup(long_term_retention_policy.value, "weekly_retention")
+      monthly_retention = lookup(long_term_retention_policy.value, "monthly_retention")
+      yearly_retention = lookup(long_term_retention_policy.value, "yearly_retention")
+      week_of_year = lookup(long_term_retention_policy.value, "week_of_year")
+    }
+  }
+
+  dynamic "point_in_time_restore" {
+    for_each = try(lookup(var.mssql_managed_database[count.index], "point_in_time_restore") == null ? [] : ["point_in_time_restore"])
+    content {
+      restore_point_in_time = lookup(point_in_time_restore.value, "restore_point_in_time")
+      source_database_id = try(element(azurerm_mssql_database.this.*.id, lookup(point_in_time_restore.value, "source_database_id")))
+    }
+  }
 }
 
 resource "azurerm_mssql_managed_instance" "this" {
   count                        = length(var.mssql_managed_instance)
-  administrator_login          = ""
-  administrator_login_password = ""
-  license_type                 = ""
-  location                     = ""
-  name                         = ""
-  resource_group_name          = ""
-  sku_name                     = ""
-  storage_size_in_gb           = 0
-  subnet_id                    = ""
-  vcores                       = 0
+  administrator_login          = sensitive(lookup(var.mssql_managed_instance[count.index],"administrator_login"))
+  administrator_login_password = sensitive(lookup(var.mssql_managed_instance[count.index],"administrator_login_password"))
+  license_type                 = lookup(var.mssql_managed_instance[count.index], "license_type")
+  location                     = data.azurerm_resource_group.this.name
+  name                         = lookup(var.mssql_managed_instance[count.index], "name")
+  resource_group_name          = data.azurerm_resource_group.this.location
+  sku_name                     = lookup(var.mssql_managed_instance[count.index], "sku_name")
+  storage_size_in_gb           = lookup(var.mssql_managed_instance[count.index], "storage_size_in_gb")
+  subnet_id                    = data.azurerm_subnet.this.id
+  vcores                       = lookup(var.mssql_managed_instance[count.index], "vcores")
 }
 
 resource "azurerm_mssql_managed_instance_active_directory_administrator" "this" {
   count               = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_active_directory_administrator)
-  login_username      = ""
-  managed_instance_id = ""
-  object_id           = ""
-  tenant_id           = ""
+  login_username      = lookup(var.mssql_managed_instance_active_directory_administrator[count.index], "login_username")
+  managed_instance_id = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_instance_active_directory_administrator[count.index], "managed_instance_id"))
+  object_id           = data.azuread_user.this.object_id
+  tenant_id           = data.azurerm_client_config.this.tenant_id
 }
 
 resource "azurerm_mssql_managed_instance_failover_group" "this" {
   count                       = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_failover_group)
-  location                    = ""
-  managed_instance_id         = ""
-  name                        = ""
-  partner_managed_instance_id = ""
+  location                    = data.azurerm_resource_group.this.name
+  managed_instance_id         = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_instance_failover_group[count.index], "managed_instance_id"))
+  name                        = lookup(var.mssql_managed_instance_failover_group[count.index], "name")
+  partner_managed_instance_id = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_instance_failover_group[count.index], "partner_managed_instance_id"))
+  readonly_endpoint_failover_policy_enabled = lookup(var.mssql_managed_instance_failover_group[count.index], "readonly_endpoint_failover_policy_enabled")
+  secondary_type = ""
+
+  dynamic "read_write_endpoint_failover_policy" {
+    for_each = try(lookup(var.mssql_managed_instance_failover_group[count.index], "read_write_endpoint_failover_policy") == null ? [] : ["read_write_endpoint_failover_policy"])
+    content {
+      mode = lookup(read_write_endpoint_failover_policy.value, "mode")
+      grace_minutes = lookup(read_write_endpoint_failover_policy.value, "grace_minutes")
+    }
+  }
 }
 
 resource "azurerm_mssql_managed_instance_security_alert_policy" "this" {
