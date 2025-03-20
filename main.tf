@@ -189,19 +189,19 @@ resource "azurerm_mssql_job_credential" "this" {
 }
 
 resource "azurerm_mssql_managed_database" "this" {
-  count               = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_database)
-  managed_instance_id = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_database[count.index], "managed_instance_id"))
-  name                = lookup(var.mssql_managed_database[count.index], "name")
+  count                     = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_database)
+  managed_instance_id       = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_database[count.index], "managed_instance_id"))
+  name                      = lookup(var.mssql_managed_database[count.index], "name")
   short_term_retention_days = lookup(var.mssql_managed_database[count.index], "short_term_retention_days")
 
-  
+
   dynamic "long_term_retention_policy" {
     for_each = try(lookup(var.mssql_managed_database[count.index], "long_term_retention_policy") == null ? [] : ["long_term_retention_policy"])
     content {
-      weekly_retention = lookup(long_term_retention_policy.value, "weekly_retention")
+      weekly_retention  = lookup(long_term_retention_policy.value, "weekly_retention")
       monthly_retention = lookup(long_term_retention_policy.value, "monthly_retention")
-      yearly_retention = lookup(long_term_retention_policy.value, "yearly_retention")
-      week_of_year = lookup(long_term_retention_policy.value, "week_of_year")
+      yearly_retention  = lookup(long_term_retention_policy.value, "yearly_retention")
+      week_of_year      = lookup(long_term_retention_policy.value, "week_of_year")
     }
   }
 
@@ -209,15 +209,15 @@ resource "azurerm_mssql_managed_database" "this" {
     for_each = try(lookup(var.mssql_managed_database[count.index], "point_in_time_restore") == null ? [] : ["point_in_time_restore"])
     content {
       restore_point_in_time = lookup(point_in_time_restore.value, "restore_point_in_time")
-      source_database_id = try(element(azurerm_mssql_database.this.*.id, lookup(point_in_time_restore.value, "source_database_id")))
+      source_database_id    = try(element(azurerm_mssql_database.this.*.id, lookup(point_in_time_restore.value, "source_database_id")))
     }
   }
 }
 
 resource "azurerm_mssql_managed_instance" "this" {
   count                        = length(var.mssql_managed_instance)
-  administrator_login          = sensitive(lookup(var.mssql_managed_instance[count.index],"administrator_login"))
-  administrator_login_password = sensitive(lookup(var.mssql_managed_instance[count.index],"administrator_login_password"))
+  administrator_login          = sensitive(lookup(var.mssql_managed_instance[count.index], "administrator_login"))
+  administrator_login_password = sensitive(lookup(var.mssql_managed_instance[count.index], "administrator_login_password"))
   license_type                 = lookup(var.mssql_managed_instance[count.index], "license_type")
   location                     = data.azurerm_resource_group.this.name
   name                         = lookup(var.mssql_managed_instance[count.index], "name")
@@ -237,108 +237,310 @@ resource "azurerm_mssql_managed_instance_active_directory_administrator" "this" 
 }
 
 resource "azurerm_mssql_managed_instance_failover_group" "this" {
-  count                       = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_failover_group)
-  location                    = data.azurerm_resource_group.this.name
-  managed_instance_id         = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_instance_failover_group[count.index], "managed_instance_id"))
-  name                        = lookup(var.mssql_managed_instance_failover_group[count.index], "name")
-  partner_managed_instance_id = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_instance_failover_group[count.index], "partner_managed_instance_id"))
+  count                                     = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_failover_group)
+  location                                  = data.azurerm_resource_group.this.name
+  managed_instance_id                       = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_instance_failover_group[count.index], "managed_instance_id"))
+  name                                      = lookup(var.mssql_managed_instance_failover_group[count.index], "name")
+  partner_managed_instance_id               = element(azurerm_mssql_managed_instance.this.*.id, lookup(var.mssql_managed_instance_failover_group[count.index], "partner_managed_instance_id"))
   readonly_endpoint_failover_policy_enabled = lookup(var.mssql_managed_instance_failover_group[count.index], "readonly_endpoint_failover_policy_enabled")
-  secondary_type = ""
+  secondary_type                            = lookup(var.mssql_managed_instance_failover_group[count.index], "secondary_type")
 
   dynamic "read_write_endpoint_failover_policy" {
     for_each = try(lookup(var.mssql_managed_instance_failover_group[count.index], "read_write_endpoint_failover_policy") == null ? [] : ["read_write_endpoint_failover_policy"])
     content {
-      mode = lookup(read_write_endpoint_failover_policy.value, "mode")
+      mode          = lookup(read_write_endpoint_failover_policy.value, "mode")
       grace_minutes = lookup(read_write_endpoint_failover_policy.value, "grace_minutes")
     }
   }
 }
 
 resource "azurerm_mssql_managed_instance_security_alert_policy" "this" {
-  count                 = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_security_alert_policy)
-  managed_instance_name = ""
-  resource_group_name   = ""
+  count                        = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_security_alert_policy)
+  managed_instance_name        = element(azurerm_mssql_managed_instance.this.*.name, lookup(var.mssql_managed_instance_security_alert_policy[count.index], "managed_instance_id"))
+  resource_group_name          = data.azurerm_resource_group.this.name
+  disabled_alerts              = lookup(var.mssql_managed_instance_security_alert_policy[count.index], "disabled_alerts")
+  enabled                      = lookup(var.mssql_managed_instance_security_alert_policy[count.index], "enabled")
+  email_account_admins_enabled = lookup(var.mssql_managed_instance_security_alert_policy[count.index], "email_account_admins_enabled")
+  email_addresses              = lookup(var.mssql_managed_instance_security_alert_policy[count.index], "email_addresses")
+  retention_days               = lookup(var.mssql_managed_instance_security_alert_policy[count.index], "retention_days")
+  storage_endpoint             = try(var.storage_account_name ? data.azurerm_storage_account.this.primary_blob_endpoint : element(module.storage.*.storage_account_primary_blob_endpoint, lookup(var.mssql_managed_instance_security_alert_policy[count.index], "storage_account_id")))
+  storage_account_access_key   = try(var.storage_account_name ? data.azurerm_storage_account.this.primary_access_key : element(module.storage.*.storage_account_primary_access_key, lookup(var.mssql_managed_instance_security_alert_policy[count.index], "storage_account_id")))
 }
 
 resource "azurerm_mssql_managed_instance_transparent_data_encryption" "this" {
-  count               = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_transparent_data_encryption)
-  managed_instance_id = ""
+  count                 = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_transparent_data_encryption)
+  managed_instance_id   = element(azurerm_mssql_managed_instance.this.*.name, lookup(var.mssql_managed_instance_transparent_data_encryption[count.index], "managed_instance_id"))
+  key_vault_key_id      = try(var.keyvault_key_name ? data.azurerm_key_vault_key.this.id : element(module.keyvault.*.key_vault_key_id, lookup(var.mssql_managed_instance_transparent_data_encryption[count.index], "key_vault_key_id")))
+  auto_rotation_enabled = true
 }
 
 resource "azurerm_mssql_managed_instance_vulnerability_assessment" "this" {
-  count                  = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_vulnerability_assessment)
-  managed_instance_id    = ""
-  storage_container_path = ""
+  count               = length(var.mssql_managed_instance) == 0 ? 0 : length(var.mssql_managed_instance_vulnerability_assessment)
+  managed_instance_id = element(azurerm_mssql_managed_instance.this.*.name, lookup(var.mssql_managed_instance_vulnerability_assessment[count.index], "managed_instance_id"))
+  storage_container_path = join("", [
+    var.storage_account_name ? data.azurerm_storage_account.this.primary_blob_endpoint : element(module.storage.*.storage_account_primary_blob_endpoint, lookup(var.mssql_managed_instance_vulnerability_assessment[count.index], "storage_account_id")),
+    var.storage_container_name ? data.azurerm_storage_container.this.name : element(module.storage.*.container_name, lookup(var.mssql_managed_instance_vulnerability_assessment[count.index], "storage_container_id"))
+  ])
+  storage_account_access_key = var.storage_account_name ? data.azurerm_storage_account.this.primary_access_key : element(module.storage.*.storage_account_primary_access_key, lookup(var.mssql_managed_instance_vulnerability_assessment[count.index], "storage_account_id"))
+
+  dynamic "recurring_scans" {
+    for_each = try(lookup(var.mssql_managed_instance_vulnerability_assessment[count.index], "recurring_scans") == null ? [] : ["recurring_scans"])
+    content {
+      enabled                   = lookup(recurring_scans.value, "enabled")
+      email_subscription_admins = lookup(recurring_scans.value, "email_subscription_admins")
+      emails                    = lookup(recurring_scans.value, "emails")
+    }
+  }
 }
 
 resource "azurerm_mssql_outbound_firewall_rule" "this" {
   count     = length(var.mssql_server) == 0 ? 0 : length(var.mssql_outbound_firewall_rule)
-  name      = ""
-  server_id = ""
+  name      = lookup(var.mssql_outbound_firewall_rule[count.index], "name")
+  server_id = element(azurerm_mssql_server.this.*.id, lookup(var.mssql_outbound_firewall_rule[count.index], "server_id"))
 }
 
 resource "azurerm_mssql_server" "this" {
-  count               = length(var.mssql_server)
-  location            = ""
-  name                = ""
-  resource_group_name = ""
-  version             = ""
+  count                                        = length(var.mssql_server)
+  location                                     = data.azurerm_resource_group.this.location
+  name                                         = lookup(var.mssql_server[count.index], "name")
+  resource_group_name                          = data.azurerm_resource_group.this.name
+  version                                      = lookup(var.mssql_server[count.index], "version")
+  administrator_login                          = sensitive(lookup(var.mssql_server[count.index], "administrator_login"))
+  administrator_login_password                 = sensitive(lookup(var.mssql_server[count.index], "administrator_login_password"))
+  connection_policy                            = lookup(var.mssql_server[count.index], "connection_policy")
+  transparent_data_encryption_key_vault_key_id = try(var.keyvault_key_name ? data.azurerm_key_vault_key.this.id : element(module.keyvault.*.key_vault_key_id, lookup(var.mssql_server[count.index], "")))
+  minimum_tls_version                          = lookup(var.mssql_server[count.index], "minimum_tls_version")
+  public_network_access_enabled                = lookup(var.mssql_server[count.index], "public_network_access_enabled")
+  outbound_network_restriction_enabled         = lookup(var.mssql_server[count.index], "outbound_network_restriction_enabled")
+  primary_user_assigned_identity_id            = ""
+  tags                                         = lookup(var.mssql_server[count.index], "tags")
+
+  dynamic "azuread_administrator" {
+    for_each = try(lookup(var.mssql_server[count.index], "azuread_administrator") == null ? [] : ["azuread_administrator"])
+    content {
+      login_username              = lookup(azuread_administrator.value, "login_username")
+      object_id                   = data.azurerm_user_assigned_identity.this.name
+      tenant_id                   = data.azurerm_user_assigned_identity.this.principal_id
+      azuread_authentication_only = lookup(azuread_administrator.value, "azuread_authentication_only")
+    }
+  }
+
+  dynamic "identity" {
+    for_each = try(lookup(var.mssql_server[count.index], "identity") == null ? [] : ["identity"])
+    content {
+      type         = lookup(identity.value, "type")
+      identity_ids = [lookup(identity.value, "type") == "SystemAssigned" ? data.azurerm_user_assigned_identity.this.id : null]
+    }
+  }
 }
 
 resource "azurerm_mssql_server_dns_alias" "this" {
   count           = length(var.mssql_server) == 0 ? 0 : length(var.mssql_server_dns_alias)
-  mssql_server_id = ""
-  name            = ""
+  mssql_server_id = element(azurerm_mssql_server.this.*.id, lookup(var.mssql_server_dns_alias[count.index], "mssql_server_id"))
+  name            = lookup(var.mssql_server_dns_alias[count.index], "name")
 }
 
 resource "azurerm_mssql_server_extended_auditing_policy" "this" {
-  count     = length(var.mssql_server) == 0 ? 0 : length(var.mssql_server_extended_auditing_policy)
-  server_id = ""
+  count                                   = length(var.mssql_server) == 0 ? 0 : length(var.mssql_server_extended_auditing_policy)
+  server_id                               = element(azurerm_mssql_server.this.*.id, lookup(var.mssql_database_extended_auditing_policy[count.index], "server_id"))
+  enabled                                 = lookup(var.mssql_database_extended_auditing_policy[count.index], "enabled")
+  storage_endpoint                        = try(var.storage_account_name ? data.azurerm_storage_account.this.primary_blob_endpoint : element(module.storage.*.storage_account_primary_blob_endpoint, lookup(var.mssql_database_extended_auditing_policy[count.index], "storage_account_id")))
+  retention_in_days                       = lookup(var.mssql_database_extended_auditing_policy[count.index], "retention_in_days")
+  storage_account_access_key              = try(var.storage_account_name ? data.azurerm_storage_account.this.primary_access_key : element(module.storage.*.storage_account_primary_access_key, lookup(var.mssql_database_extended_auditing_policy[count.index], "storage_account_id")))
+  storage_account_access_key_is_secondary = lookup(var.mssql_database_extended_auditing_policy[count.index], "storage_account_access_key_is_secondary")
+  log_monitoring_enabled                  = lookup(var.mssql_database_extended_auditing_policy[count.index], "log_monitoring_enabled")
+  storage_account_subscription_id         = data.azurerm_subscription.this.subscription_id
+  predicate_expression                    = lookup(var.mssql_database_extended_auditing_policy[count.index], "predicate_expression")
+  audit_actions_and_groups                = lookup(var.mssql_database_extended_auditing_policy[count.index], "audit_actions_and_groups")
+}
+
+resource "azurerm_mssql_server_microsoft_support_auditing_policy" "this" {
+  count                           = length(var.mssql_server) == 0 ? 0 : length(var.support_auditing_policy)
+  server_id                       = element(azurerm_mssql_server.this.*.id, lookup(var.support_auditing_policy[count.index], "server_id"))
+  enabled                         = lookup(var.support_auditing_policy[count.index], "enabled")
+  blob_storage_endpoint           = try(var.storage_account_name ? data.azurerm_storage_account.this.primary_blob_endpoint : element(module.storage.*.storage_account_primary_blob_endpoint, lookup(var.support_auditing_policy[count.index], "storage_account_id")))
+  storage_account_access_key      = try(var.storage_account_name ? data.azurerm_storage_account.this.primary_access_key : element(module.storage.*.storage_account_primary_access_key, lookup(var.support_auditing_policy[count.index], "storage_account_id")))
+  storage_account_subscription_id = data.azurerm_subscription.this.subscription_id
+  log_monitoring_enabled          = lookup(var.support_auditing_policy[count.index], "log_monitoring_enabled")
 }
 
 resource "azurerm_mssql_server_security_alert_policy" "this" {
-  count               = length(var.mssql_server) == 0 ? 0 : length(var.mssql_server_security_alert_policy)
-  resource_group_name = ""
-  server_name         = ""
-  state               = ""
+  count                      = length(var.mssql_server) == 0 ? 0 : length(var.mssql_server_security_alert_policy)
+  resource_group_name        = data.azurerm_resource_group.this.name
+  server_name                = element(azurerm_mssql_server.this.*.name, lookup(var.mssql_server_security_alert_policy[count.index], "server_id"))
+  state                      = lookup(var.mssql_server_security_alert_policy[count.index], "state")
+  disabled_alerts            = lookup(var.mssql_server_security_alert_policy[count.index], "disabled_alerts")
+  email_account_admins       = lookup(var.mssql_server_security_alert_policy[count.index], "email_account_admins")
+  email_addresses            = lookup(var.mssql_server_security_alert_policy[count.index], "email_addresses")
+  retention_days             = lookup(var.mssql_server_security_alert_policy[count.index], "retention_days")
+  storage_endpoint           = try(var.storage_account_name ? data.azurerm_storage_account.this.primary_blob_endpoint : element(module.storage.*.storage_account_primary_blob_endpoint, lookup(var.mssql_server_security_alert_policy[count.index], "storage_account_id")))
+  storage_account_access_key = try(var.storage_account_name ? data.azurerm_storage_account.this.primary_access_key : element(module.storage.*.storage_account_primary_access_key, lookup(var.mssql_server_security_alert_policy[count.index], "storage_account_id")))
 }
 
 resource "azurerm_mssql_server_transparent_data_encryption" "this" {
-  count     = length(var.mssql_server) == 0 ? 0 : length(var.mssql_server_transparent_data_encryption)
-  server_id = ""
+  count                 = length(var.mssql_server) == 0 ? 0 : length(var.mssql_server_transparent_data_encryption)
+  server_id             = element(azurerm_mssql_server.this.*.name, lookup(var.mssql_server_transparent_data_encryption[count.index], "server_id"))
+  key_vault_key_id      = try(var.keyvault_key_name ? data.azurerm_key_vault_key.this.id : element(module.keyvault.*.key_vault_key_id, lookup(var.mssql_server_transparent_data_encryption[count.index], "key_vault_key_id")))
+  auto_rotation_enabled = true
 }
 
 resource "azurerm_mssql_server_vulnerability_assessment" "this" {
   count                           = length(var.mssql_server_security_alert_policy) == 0 ? 0 : length(var.mssql_server_vulnerability_assessment)
-  server_security_alert_policy_id = ""
-  storage_container_path          = ""
+  server_security_alert_policy_id = element(azurerm_mssql_server_security_alert_policy.this.*.id, lookup(var.mssql_server_vulnerability_assessment[count.index], "server_security_alert_policy_id"))
+  storage_container_path = join("", [
+    var.storage_account_name ? data.azurerm_storage_account.this.primary_blob_endpoint : element(module.storage.*.storage_account_primary_blob_endpoint, lookup(var.mssql_server_vulnerability_assessment[count.index], "storage_account_id")),
+    var.storage_container_name ? data.azurerm_storage_container.this.name : element(module.storage.*.container_name, lookup(var.mssql_server_vulnerability_assessment[count.index], "storage_container_id"))
+  ])
+  storage_account_access_key = var.storage_account_name ? data.azurerm_storage_account.this.primary_access_key : element(module.storage.*.storage_account_primary_access_key, lookup(var.mssql_server_vulnerability_assessment[count.index], "storage_account_id"))
+
+  dynamic "recurring_scans" {
+    for_each = try(lookup(var.mssql_server_vulnerability_assessment[count.index], "recurring_scans") == null ? [] : ["recurring_scans"])
+    content {
+      enabled                   = lookup(recurring_scans.value, "enabled")
+      email_subscription_admins = lookup(recurring_scans.value, "email_subscription_admins")
+      emails                    = lookup(recurring_scans.value, "emails")
+    }
+  }
 }
 
 resource "azurerm_mssql_virtual_machine" "this" {
-  count              = length(var.mssql_virtual_machine)
-  virtual_machine_id = ""
+  count                            = length(var.mssql_virtual_machine)
+  virtual_machine_id               = data.azurerm_virtual_machine.this.id
+  sql_license_type                 = lookup(var.mssql_virtual_machine[count.index], "sql_license_type")
+  r_services_enabled               = lookup(var.mssql_virtual_machine[count.index], "r_services_enabled")
+  sql_connectivity_port            = lookup(var.mssql_virtual_machine[count.index], "sql_connectivity_port")
+  sql_connectivity_type            = lookup(var.mssql_virtual_machine[count.index], "sql_connectivity_type")
+  sql_connectivity_update_password = sensitive(lookup(var.mssql_virtual_machine[count.index], "sql_connectivity_update_password"))
+  sql_connectivity_update_username = sensitive(lookup(var.mssql_virtual_machine[count.index], "sql_connectivity_update_username"))
+  tags                             = lookup(var.mssql_virtual_machine[count.index], "tags", )
+
+  dynamic "auto_backup" {
+    for_each = try(lookup(var.mssql_virtual_machine[count.index], "auto_backup") == null ? [] : ["auto_backup"])
+    content {
+      retention_period_in_days   = lookup(auto_backup.value, "retention_period_in_days")
+      storage_account_access_key = var.storage_account_name ? data.azurerm_storage_account.this.primary_access_key : element(module.storage.*.storage_account_primary_access_key, lookup(auto_backup.value, "storage_account_id"))
+      storage_blob_endpoint      = var.storage_account_name ? data.azurerm_storage_account.this.primary_blob_endpoint : element(module.storage.*.storage_account_primary_blob_endpoint, lookup(auto_backup.value, "storage_account_id"))
+      encryption_enabled         = lookup(auto_backup.value, "encryption_enabled")
+      encryption_password        = sensitive(lookup(auto_backup.value, "encryption_password"))
+
+      dynamic "manual_schedule" {
+        for_each = try(lookup(auto_backup.value, "manual_schedule") == null ? [] : ["manual_schedule"])
+        content {
+          full_backup_frequency           = lookup(manual_schedule.value, "full_backup_frequency")
+          full_backup_start_hour          = lookup(manual_schedule.value, "full_backup_start_hour")
+          full_backup_window_in_hours     = lookup(manual_schedule.value, "full_backup_window_in_hours")
+          log_backup_frequency_in_minutes = lookup(manual_schedule.value, "log_backup_frequency_in_minutes")
+          days_of_week                    = lookup(manual_schedule.value, "days_of_week")
+        }
+      }
+    }
+  }
+
+  dynamic "auto_patching" {
+    for_each = try(lookup(var.mssql_virtual_machine[count.index], "auto_patching") == null ? [] : ["auto_patching"])
+    content {
+      day_of_week                            = lookup(auto_patching.value, "day_of_week")
+      maintenance_window_duration_in_minutes = lookup(auto_patching.value, "maintenance_window_duration_in_minutes")
+      maintenance_window_starting_hour       = lookup(auto_patching.value, "maintenance_window_starting_hour")
+    }
+  }
+
+  dynamic "key_vault_credential" {
+    for_each = try(lookup(var.mssql_virtual_machine[count.index], "key_vault_credential") == null ? [] : ["key_vault_credential"])
+    content {
+      key_vault_url            = lookup(key_vault_credential.value, "key_vault_url")
+      name                     = lookup(key_vault_credential.value, "name")
+      service_principal_name   = lookup(key_vault_credential.value, "service_principal_name")
+      service_principal_secret = lookup(key_vault_credential.value, "service_principal_secret")
+    }
+  }
+
+  dynamic "sql_instance" {
+    for_each = try(lookup(var.mssql_virtual_machine[count.index], "sql_instance") == null ? [] : ["sql_instance"])
+    content {
+      adhoc_workloads_optimization_enabled = lookup(sql_instance.value, "adhoc_workloads_optimization_enabled")
+      collation                            = lookup(sql_instance.value, "collation")
+      instant_file_initialization_enabled  = lookup(sql_instance.value, "instant_file_initialization_enabled")
+      lock_pages_in_memory_enabled         = lookup(sql_instance.value, "lock_pages_in_memory_enabled")
+      max_dop                              = lookup(sql_instance.value, "max_dop")
+      max_server_memory_mb                 = lookup(sql_instance.value, "max_server_memory_mb")
+      min_server_memory_mb                 = lookup(sql_instance.value, "min_server_memory_mb")
+    }
+  }
+
+  dynamic "storage_configuration" {
+    for_each = try(lookup(var.mssql_virtual_machine[count.index], "storage_configuration") == null ? [] : ["storage_configuration"])
+    content {
+      disk_type             = lookup(storage_configuration.value, "disk_type")
+      storage_workload_type = lookup(storage_configuration.value, "storage_workload_type")
+    }
+  }
+
+  dynamic "wsfc_domain_credential" {
+    for_each = try(lookup(var.mssql_virtual_machine[count.index], "wsfc_domain_credential") == null ? [] : ["wsfc_domain_credential"])
+    content {
+      cluster_bootstrap_account_password = sensitive(lookup(wsfc_domain_credential.value, "cluster_bootstrap_account_password"))
+      cluster_operator_account_password  = sensitive(lookup(wsfc_domain_credential.value, "cluster_operator_account_password"))
+      sql_service_account_password       = sensitive(lookup(wsfc_domain_credential.value, "sql_service_account_password"))
+    }
+  }
 }
 
 resource "azurerm_mssql_virtual_machine_availability_group_listener" "this" {
   count                        = length(var.mssql_virtual_machine_group) == 0 ? 0 : length(var.mssql_virtual_machine_availability_group_listener)
-  name                         = ""
-  sql_virtual_machine_group_id = ""
+  name                         = lookup(azurerm_mssql_virtual_machine_availability_group_listener[count.index], "name")
+  sql_virtual_machine_group_id = element(azurerm_mssql_virtual_machine_group.this.*.id, lookup(var.mssql_virtual_machine_availability_group_listener[count.index], "sql_virtual_machine_group_id"))
+  availability_group_name      = lookup(azurerm_mssql_virtual_machine_availability_group_listener[count.index], "availability_group_name")
+  port                         = lookup(azurerm_mssql_virtual_machine_availability_group_listener[count.index], "port")
+
+  dynamic "load_balancer_configuration" {
+    for_each = try(lookup(var.mssql_virtual_machine_availability_group_listener[count.index], "load_balancer_configuration") == null ? [] : ["load_balancer_configuration"])
+    content {
+      load_balancer_id        = data.azurerm_lb.this.id
+      private_ip_address      = lookup(load_balancer_configuration.value, "private_ip_address")
+      probe_port              = lookup(load_balancer_configuration.value, "probe_port")
+      sql_virtual_machine_ids = [element(azurerm_mssql_virtual_machine.this.*.id, lookup(load_balancer_configuration.value, "sql_virtual_machine_ids"))]
+      subnet_id               = data.azurerm_subnet.this.id
+    }
+  }
+
+  dynamic "multi_subnet_ip_configuration" {
+    for_each = try(lookup(var.mssql_virtual_machine_availability_group_listener[count.index], "multi_subnet_ip_configuration") == null ? [] : ["multi_subnet_ip_configuration"])
+    content {
+      private_ip_address     = lookup(multi_subnet_ip_configuration.value, "private_ip_address")
+      sql_virtual_machine_id = element(azurerm_mssql_virtual_machine.this.*.id, lookup(multi_subnet_ip_configuration.value, "sql_virtual_machine_ids"))
+      subnet_id              = data.azurerm_subnet.this.id
+    }
+  }
+
+  dynamic "replica" {
+    for_each = try(lookup(var.mssql_virtual_machine_availability_group_listener[count.index], "replica") == null ? [] : ["replica"])
+    content {
+      commit                 = lookup(replica.value, "commit")
+      failover_mode          = lookup(replica.value, "failover_mode")
+      readable_secondary     = lookup(replica.value, "readable_secondary")
+      role                   = lookup(replica.value, "role")
+      sql_virtual_machine_id = element(azurerm_mssql_virtual_machine.this.*.id, lookup(replica.value, "sql_virtual_machine_ids"))
+    }
+  }
 }
 
 resource "azurerm_mssql_virtual_machine_group" "this" {
   count               = length(var.mssql_virtual_machine_group)
-  location            = ""
-  name                = ""
-  resource_group_name = ""
-  sql_image_offer     = ""
-  sql_image_sku       = ""
+  location            = data.azurerm_resource_group.this.location
+  name                = lookup(var.mssql_virtual_machine_group[count.index], "name")
+  resource_group_name = data.azurerm_resource_group.this.name
+  sql_image_offer     = lookup(var.mssql_virtual_machine_group[count.index], "sql_image_offer")
+  sql_image_sku       = lookup(var.mssql_virtual_machine_group[count.index], "sql_image_sku")
+  tags                = lookup(var.mssql_virtual_machine_group[count.index], "tags")
 }
 
 resource "azurerm_mssql_virtual_network_rule" "this" {
-  count     = length(var.mssql_server) == 0 ? 0 : length(var.mssql_virtual_network_rule)
-  name      = ""
-  server_id = ""
-  subnet_id = ""
+  count                                = length(var.mssql_server) == 0 ? 0 : length(var.mssql_virtual_network_rule)
+  name                                 = lookup(var.mssql_virtual_network_rule[count.index], "name")
+  server_id                            = element(azurerm_mssql_server.this.*.id, lookup(var.mssql_virtual_network_rule[count.index], "server_id"))
+  subnet_id                            = data.azurerm_subnet.this.id
+  ignore_missing_vnet_service_endpoint = lookup(var.mssql_virtual_network_rule[count.index], "ignore_missing_vnet_service_endpoint")
 }
 
 resource "azurerm_mysql_flexible_database" "this" {

@@ -29,17 +29,27 @@ variable "storage_container_name" {
 }
 
 variable "virtual_network_name" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "subnet_name" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "azuread_user_name" {
-  type = string
+  type    = string
+  default = null
+}
+
+variable "virtual_machine_name" {
+  type    = string
+  default = null
+}
+
+variable "lb_name" {
+  type    = string
   default = null
 }
 
@@ -227,7 +237,7 @@ variable "mssql_job_agent" {
 
 variable "mssql_job_credential" {
   type = list(object({
-    id = any
+    id           = any
     job_agent_id = any
     name         = string
     password     = string
@@ -238,19 +248,19 @@ variable "mssql_job_credential" {
 
 variable "mssql_managed_database" {
   type = list(object({
-    id = any
-    managed_instance_id = any
-    name                = string
+    id                        = any
+    managed_instance_id       = any
+    name                      = string
     short_term_retention_days = optional(number)
     long_term_retention_policy = optional(list(object({
-      weekly_retention = any
+      weekly_retention  = any
       monthly_retention = any
-      yearly_retention = any
-      week_of_year = any
+      yearly_retention  = any
+      week_of_year      = any
     })))
     point_in_time_restore = optional(list(object({
       restore_point_in_time = any
-      source_database_id = any
+      source_database_id    = any
     })))
   }))
   default = []
@@ -258,23 +268,23 @@ variable "mssql_managed_database" {
 
 variable "mssql_managed_instance" {
   type = list(object({
-    id = any
-    administrator_login = string
+    id                           = any
+    administrator_login          = string
     administrator_login_password = string
-    license_type = string
-    name = string
-    sku_name = string
-    storage_size_in_gb = string
-    vcores = string
+    license_type                 = string
+    name                         = string
+    sku_name                     = string
+    storage_size_in_gb           = string
+    vcores                       = string
   }))
   default = []
 }
 
 variable "mssql_managed_instance_active_directory_administrator" {
   type = list(object({
-    id = any
-    login_username      = string
-    managed_instance_id = any
+    id                          = any
+    login_username              = string
+    managed_instance_id         = any
     azuread_authentication_only = optional(bool)
   }))
   default = []
@@ -282,14 +292,14 @@ variable "mssql_managed_instance_active_directory_administrator" {
 
 variable "mssql_managed_instance_failover_group" {
   type = list(object({
-    id = any
-    managed_instance_id         = any
-    name                        = string
-    partner_managed_instance_id = any
+    id                                        = any
+    managed_instance_id                       = any
+    name                                      = string
+    partner_managed_instance_id               = any
     readonly_endpoint_failover_policy_enabled = optional(bool)
-    secondary_type = optional(string)
+    secondary_type                            = optional(string)
     read_write_endpoint_failover_policy = optional(list(object({
-      mode = string
+      mode          = string
       grace_minutes = optional(string)
     })))
   }))
@@ -298,98 +308,256 @@ variable "mssql_managed_instance_failover_group" {
 
 variable "mssql_managed_instance_security_alert_policy" {
   type = list(object({
-    id = any
+    id                           = any
+    managed_instance_id          = any
+    disabled_alerts              = optional(set(string))
+    enabled                      = optional(bool)
+    email_account_admins_enabled = optional(bool)
+    email_addresses              = optional(set(string))
+    retention_days               = optional(number)
+    storage_account_id           = optional(any)
   }))
   default = []
 }
 
 variable "mssql_managed_instance_transparent_data_encryption" {
   type = list(object({
-    id = any
+    id                  = any
+    managed_instance_id = any
+    key_vault_key_id    = optional(any)
   }))
   default = []
 }
 
 variable "mssql_managed_instance_vulnerability_assessment" {
   type = list(object({
-    id = any
+    id                   = any
+    managed_instance_id  = any
+    storage_account_id   = any
+    storage_container_id = any
+    recurring_scans = optional(list(object({
+      enabled                   = optional(bool)
+      email_subscription_admins = optional(bool)
+      emails                    = optional(list(string))
+    })), [])
   }))
   default = []
 }
 
 variable "mssql_outbound_firewall_rule" {
   type = list(object({
-    id = any
+    id        = any
+    name      = string
+    server_id = any
   }))
   default = []
 }
 
 variable "mssql_server" {
   type = list(object({
-    id = any
+    id                                           = any
+    name                                         = string
+    version                                      = string
+    administrator_login                          = optional(string)
+    administrator_login_password                 = optional(string)
+    connection_policy                            = optional(string)
+    transparent_data_encryption_key_vault_key_id = optional(any)
+    minimum_tls_version                          = optional(string)
+    public_network_access_enabled                = optional(bool)
+    outbound_network_restriction_enabled         = optional(bool)
+    primary_user_assigned_identity_id            = optional(any)
+    tags                                         = optional(map(string))
+    azuread_administrator = optional(list(object({
+      login_username              = string
+      object_id                   = any
+      tenant_id                   = optional(any)
+      azuread_authentication_only = optional(bool)
+    })), [])
+    identity = optional(list(object({
+      type         = string
+      identity_ids = optional(list(any))
+    })), [])
   }))
   default = []
 }
 
 variable "mssql_server_dns_alias" {
   type = list(object({
-    id = any
+    id              = any
+    mssql_server_id = any
+    name            = string
   }))
   default = []
 }
 
 variable "mssql_server_extended_auditing_policy" {
   type = list(object({
-    id = any
+    id                                      = any
+    server_id                               = any
+    enabled                                 = optional(bool)
+    storage_endpoint                        = optional(any)
+    retention_in_days                       = optional(number)
+    storage_account_id                      = optional(any)
+    storage_account_access_key_is_secondary = optional(bool)
+    log_monitoring_enabled                  = optional(bool)
+    predicate_expression                    = optional(string)
+    audit_actions_and_groups                = optional(set(string))
+  }))
+  default = []
+}
+
+variable "support_auditing_policy" {
+  type = list(object({
+    id                     = any
+    server_id              = any
+    enabled                = optional(bool)
+    storage_account_id     = optional(any)
+    log_monitoring_enabled = optional(bool)
   }))
   default = []
 }
 
 variable "mssql_server_security_alert_policy" {
   type = list(object({
-    id = any
+    id                   = any
+    server_id            = any
+    state                = string
+    disabled_alerts      = optional(list(string))
+    email_account_admins = optional(bool)
+    email_addresses      = optional(list(string))
+    retention_days       = optional(number)
   }))
   default = []
 }
 
 variable "mssql_server_transparent_data_encryption" {
   type = list(object({
-    id = any
+    id               = any
+    server_id        = any
+    key_vault_key_id = optional(any)
   }))
   default = []
 }
 
 variable "mssql_server_vulnerability_assessment" {
   type = list(object({
-    id = any
+    id                              = any
+    server_security_alert_policy_id = any
+    storage_account_id              = any
+    storage_container_id            = any
+    recurring_scans = optional(list(object({
+      enabled                   = optional(bool)
+      email_subscription_admins = optional(bool)
+      emails                    = optional(list(string))
+    })), [])
   }))
   default = []
 }
 
 variable "mssql_virtual_machine" {
   type = list(object({
-    id = any
+    id                               = any
+    virtual_machine_id               = optional(any)
+    sql_license_type                 = optional(string)
+    r_services_enabled               = optional(bool)
+    sql_connectivity_port            = optional(number)
+    sql_connectivity_type            = optional(string)
+    sql_connectivity_update_password = optional(string)
+    sql_connectivity_update_username = optional(string)
+    tags                             = optional(map(string))
+    auto_backup = optional(list(object({
+      retention_period_in_days = number
+      storage_account_id       = any
+      encryption_enabled       = optional(bool)
+      encryption_password      = optional(string)
+      manual_schedule = optional(list(object({
+        full_backup_frequency           = optional(string)
+        full_backup_start_hour          = optional(number)
+        full_backup_window_in_hours     = optional(number)
+        log_backup_frequency_in_minutes = optional(number)
+        days_of_week                    = optional(list(string))
+      })), [])
+    })), [])
+    auto_patching = optional(list(object({
+      day_of_week                            = string
+      maintenance_window_duration_in_minutes = number
+      maintenance_window_starting_hour       = number
+    })), [])
+    key_vault_credential = optional(list(object({
+      key_vault_url            = string
+      name                     = string
+      service_principal_name   = string
+      service_principal_secret = string
+    })), [])
+    sql_instance = optional(list(object({
+      adhoc_workloads_optimization_enabled = optional(bool)
+      collation                            = optional(string)
+      instant_file_initialization_enabled  = optional(bool)
+      lock_pages_in_memory_enabled         = optional(bool)
+      max_dop                              = optional(number)
+      max_server_memory_mb                 = optional(number)
+      min_server_memory_mb                 = optional(number)
+    })), [])
+    storage_configuration = optional(list(object({
+      disk_type             = string
+      storage_workload_type = string
+    })), [])
+    wsfc_domain_credential = optional(list(object({
+      cluster_bootstrap_account_password = string
+      cluster_operator_account_password  = string
+      sql_service_account_password       = string
+    })), [])
   }))
   default = []
 }
 
 variable "mssql_virtual_machine_availability_group_listener" {
   type = list(object({
-    id = any
+    id                           = any
+    name                         = string
+    sql_virtual_machine_group_id = any
+    availability_group_name      = optional(string)
+    port                         = optional(number)
+    load_balancer_configuration = optional(list(object({
+      load_balancer_id        = any
+      private_ip_address      = string
+      probe_port              = number
+      sql_virtual_machine_ids = list(any)
+      subnet_id               = any
+    })), [])
+    multi_subnet_ip_configuration = optional(list(object({
+      private_ip_address     = string
+      sql_virtual_machine_id = any
+      subnet_id              = any
+    })), [])
+    replica = optional(list(object({
+      commit                 = string
+      failover_mode          = string
+      readable_secondary     = string
+      role                   = string
+      sql_virtual_machine_id = any
+    })), [])
   }))
   default = []
 }
 
 variable "mssql_virtual_machine_group" {
   type = list(object({
-    id = any
+    id              = any
+    name            = string
+    sql_image_offer = string
+    sql_image_sku   = string
+    tags            = map(string)
   }))
   default = []
 }
 
 variable "mssql_virtual_network_rule" {
   type = list(object({
-    id = any
+    id                                   = any
+    name                                 = string
+    server_id                            = any
+    ignore_missing_vnet_service_endpoint = optional(bool)
   }))
   default = []
 }
