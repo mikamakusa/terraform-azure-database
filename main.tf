@@ -640,3 +640,186 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "this" {
   server_name         = element(azurerm_mysql_flexible_server.this.*.name, lookup(var.mysql_flexible_server_firewall_rule[count.index], "server_id"))
   start_ip_address    = lookup(var.mysql_flexible_server_firewall_rule[count.index], "start_ip_address")
 }
+
+resource "azurerm_postgresql_active_directory_administrator" "this" {
+  count               = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_active_directory_administrator)
+  login               = lookup(var.postgresql_active_directory_administrator[count.index], "login")
+  object_id           = data.azurerm_client_config.this.object_id
+  resource_group_name = data.azurerm_resource_group.this.name
+  server_name         = element(azurerm_postgresql_server.this.*.name, lookup(var.postgresql_active_directory_administrator[count.index], "server_id"))
+  tenant_id           = data.azurerm_client_config.this.tenant_id
+}
+
+resource "azurerm_postgresql_configuration" "this" {
+  count               = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_configuration)
+  name                = lookup(var.postgresql_configuration[count.index], "name")
+  resource_group_name = data.azurerm_resource_group.this.name
+  server_name         = element(azurerm_postgresql_server.this.*.name, lookup(var.postgresql_configuration[count.index], "server_id"))
+  value               = lookup(var.postgresql_configuration[count.index], "value")
+}
+
+resource "azurerm_postgresql_database" "this" {
+  count               = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_database)
+  charset             = lookup(var.postgresql_database[count.index], "charset")
+  collation           = lookup(var.postgresql_database[count.index], "collation")
+  name                = lookup(var.postgresql_database[count.index], "name")
+  resource_group_name = data.azurerm_resource_group.this.name
+  server_name         = element(azurerm_postgresql_server.this.*.name, lookup(var.postgresql_database[count.index], "server_id"))
+}
+
+resource "azurerm_postgresql_firewall_rule" "this" {
+  count               = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_firewall_rule)
+  end_ip_address      = lookup(var.postgresql_firewall_rule[count.index], "end_ip_address")
+  name                = lookup(var.postgresql_firewall_rule[count.index], "name")
+  resource_group_name = data.azurerm_resource_group.this.name
+  server_name         = element(azurerm_postgresql_server.this.*.name, lookup(var.postgresql_firewall_rule[count.index], "server_id"))
+  start_ip_address    = lookup(var.postgresql_firewall_rule[count.index], "start_ip_address")
+}
+
+resource "azurerm_postgresql_flexible_server" "this" {
+  count                             = length(var.postgresql_flexible_server)
+  location                          = data.azurerm_resource_group.this.location
+  name                              = lookup(var.postgresql_flexible_server[count.index], "name")
+  resource_group_name               = data.azurerm_resource_group.this.name
+  administrator_login               = sensitive(lookup(var.postgresql_flexible_server[count.index], "administrator_login"))
+  administrator_password            = sensitive(lookup(var.postgresql_flexible_server[count.index], "administrator_password"))
+  backup_retention_days             = lookup(var.postgresql_flexible_server[count.index], "backup_retention_days")
+  geo_redundant_backup_enabled      = lookup(var.postgresql_flexible_server[count.index], "geo_redundant_backup_enabled")
+  create_mode                       = lookup(var.postgresql_flexible_server[count.index], "create_mode")
+  delegated_subnet_id               = data.azurerm_subnet.this.id
+  private_dns_zone_id               = data.azurerm_private_dns_zone.this.id
+  public_network_access_enabled     = lookup(var.postgresql_flexible_server[count.index], "public_network_access_enabled")
+  point_in_time_restore_time_in_utc = lookup(var.postgresql_flexible_server[count.index], "point_in_time_restore_time_in_utc")
+  replication_role                  = lookup(var.postgresql_flexible_server[count.index], "replication_role")
+  sku_name                          = lookup(var.postgresql_flexible_server[count.index], "sku_name")
+  source_server_id                  = element(azurerm_postgresql_server.this.*.id, lookup(var.postgresql_flexible_server[count.index], "source_server_id"))
+  auto_grow_enabled                 = lookup(var.postgresql_flexible_server[count.index], "auto_grow_enabled")
+  storage_mb                        = lookup(var.postgresql_flexible_server[count.index], "storage_mb")
+  storage_tier                      = lookup(var.postgresql_flexible_server[count.index], "storage_tier")
+  tags                              = lookup(var.postgresql_flexible_server[count.index], "tags")
+  version                           = lookup(var.postgresql_flexible_server[count.index], "version")
+  zone                              = lookup(var.postgresql_flexible_server[count.index], "zone")
+
+  /*dynamic "authentication" {
+    for_each = ""
+    content {
+      active_directory_auth_enabled = true
+      password_auth_enabled = true
+      tenant_id = ""
+    }
+  }
+
+  dynamic "customer_managed_key" {
+    for_each         = ""
+    content {
+      key_vault_key_id = ""
+      primary_user_assigned_identity_id = ""
+      geo_backup_key_vault_key_id = ""
+      geo_backup_user_assigned_identity_id = ""
+    }
+  }
+
+  dynamic "high_availability" {
+    for_each = ""
+    content {
+      mode = ""
+      standby_availability_zone = ""
+    }
+  }
+
+  dynamic "identity" {
+    for_each     = ""
+    content {
+      identity_ids = []
+      type = ""
+    }
+  }
+
+  dynamic "maintenance_window" {
+    for_each = ""
+    content {
+      day_of_week = 0
+      start_hour = 0
+      start_minute = 0
+    }
+  }*/
+}
+
+resource "azurerm_postgresql_flexible_server_active_directory_administrator" "this" {
+  count               = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_flexible_server_active_directory_administrator)
+  object_id           = data.azuread_service_principal.this.object_id
+  principal_name      = data.azuread_service_principal.this.display_name
+  principal_type      = lookup(var.postgresql_flexible_server_active_directory_administrator[count.index], "principal_type")
+  resource_group_name = data.azurerm_resource_group.this.name
+  server_name         = element(azurerm_postgresql_server.this.*.name, lookup(var.postgresql_flexible_server_active_directory_administrator[count.index], "server_id"))
+  tenant_id           = data.azurerm_client_config.this.tenant_id
+}
+
+resource "azurerm_postgresql_flexible_server_configuration" "this" {
+  count     = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_flexible_server_configuration)
+  name      = lookup(var.postgresql_flexible_server_configuration[count.index], "name")
+  server_id = element(azurerm_postgresql_server.this.*.name, lookup(var.postgresql_flexible_server_configuration[count.index], "server_id"))
+  value     = lookup(var.postgresql_flexible_server_configuration[count.index], "value")
+}
+
+resource "azurerm_postgresql_flexible_server_database" "this" {
+  count     = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_flexible_server_database)
+  name      = lookup(var.postgresql_flexible_server_database[count.index], "name")
+  server_id = element(azurerm_postgresql_server.this.*.id, lookup(var.postgresql_flexible_server_database[count.index], "server_id"))
+  charset   = lookup(var.postgresql_flexible_server_database[count.index], "charset")
+  collation = lookup(var.postgresql_flexible_server_database[count.index], "collation")
+}
+
+resource "azurerm_postgresql_flexible_server_firewall_rule" "this" {
+  count            = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_flexible_server_firewall_rule)
+  end_ip_address   = lookup(var.postgresql_flexible_server_firewall_rule[count.index], "end_ip_address")
+  name             = lookup(var.postgresql_flexible_server_firewall_rule[count.index], "name")
+  server_id        = element(azurerm_postgresql_server.this.*.id, lookup(var.postgresql_flexible_server_firewall_rule[count.index], "server_id"))
+  start_ip_address = lookup(var.postgresql_flexible_server_firewall_rule[count.index], "start_ip_address")
+}
+
+resource "azurerm_postgresql_flexible_server_virtual_endpoint" "this" {
+  count             = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_flexible_server_virtual_endpoint)
+  name              = lookup(var.postgresql_flexible_server_virtual_endpoint[count.index], "name")
+  replica_server_id = element(azurerm_postgresql_flexible_server.this.*.id, lookup(var.postgresql_flexible_server_virtual_endpoint[count.index], "replica_server_id"))
+  source_server_id  = element(azurerm_postgresql_flexible_server.this.*.id, lookup(var.postgresql_flexible_server_virtual_endpoint[count.index], "source_server_id"))
+  type              = lookup(var.postgresql_flexible_server_virtual_endpoint[count.index], "type")
+}
+
+resource "azurerm_postgresql_server" "this" {
+  count                             = length(var.postgresql_server)
+  location                          = data.azurerm_resource_group.this.location
+  name                              = lookup(var.postgresql_server[count.index], "name")
+  resource_group_name               = data.azurerm_resource_group.this.name
+  sku_name                          = lookup(var.postgresql_server[count.index], "sku_name")
+  ssl_enforcement_enabled           = lookup(var.postgresql_server[count.index], "ssl_enforcement_enabled")
+  version                           = lookup(var.postgresql_server[count.index], "version")
+  administrator_login               = sensitive(lookup(var.postgresql_server[count.index], "administrator_login"))
+  administrator_login_password      = sensitive(lookup(var.postgresql_server[count.index], "administrator_login_password"))
+  auto_grow_enabled                 = lookup(var.postgresql_server[count.index], "auto_grow_enabled")
+  backup_retention_days             = lookup(var.postgresql_server[count.index], "backup_retention_days")
+  create_mode                       = lookup(var.postgresql_server[count.index], "create_mode")
+  creation_source_server_id         = element(azurerm_postgresql_server.this.*.id, lookup(var.postgresql_server[count.index], "creation_source_server_id"))
+  geo_redundant_backup_enabled      = lookup(var.postgresql_server[count.index], "geo_redundant_backup_enabled")
+  infrastructure_encryption_enabled = lookup(var.postgresql_server[count.index], "infrastructure_encryption_enabled")
+  public_network_access_enabled     = lookup(var.postgresql_server[count.index], "public_network_access_enabled")
+  restore_point_in_time             = lookup(var.postgresql_server[count.index], "restore_point_in_time")
+  ssl_minimal_tls_version_enforced  = lookup(var.postgresql_server[count.index], "ssl_minimal_tls_version_enforced")
+  storage_mb                        = lookup(var.postgresql_server[count.index], "storage_mb")
+  tags                              = lookup(var.postgresql_server[count.index], "tags")
+}
+
+resource "azurerm_postgresql_server_key" "this" {
+  count            = (length(var.postgresql_server) && (var.keyvault_key_name || length(var.keyvault_key))) == 0 ? 0 : length(var.postgresql_server_key)
+  key_vault_key_id = var.keyvault_key_name ? data.azurerm_key_vault_key.this.id : element(module.keyvault.*.key_vault_key_id, lookup(var.postgresql_server_key[count.index], "key_vault_key_id"))
+  server_id        = element(azurerm_postgresql_server.this.*.id, lookup(var.postgresql_server_key[count.index], "server_id"))
+}
+
+resource "azurerm_postgresql_virtual_network_rule" "this" {
+  count                                = length(var.postgresql_server) == 0 ? 0 : length(var.postgresql_virtual_network_rule)
+  name                                 = lookup(var.postgresql_virtual_network_rule[count.index], "name")
+  resource_group_name                  = data.azurerm_resource_group.this.name
+  server_name                          = element(azurerm_postgresql_server.this.*.name, lookup(var.postgresql_virtual_network_rule[count.index], "server_id"))
+  subnet_id                            = data.azurerm_subnet.this.id
+  ignore_missing_vnet_service_endpoint = true
+}

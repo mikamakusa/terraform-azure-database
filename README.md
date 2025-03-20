@@ -2,13 +2,15 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 4.14.0 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | 3.0.2 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 3.1.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.14.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | n/a |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 3.0.2 ~> 3.1.0 |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.14.0 |
 
 ## Modules
@@ -22,51 +24,66 @@
 
 | Name | Type |
 |------|------|
-| [azurerm_mssql_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_database) | resource |
-| [azurerm_mssql_database_extended_auditing_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_database_extended_auditing_policy) | resource |
-| [azurerm_mssql_database_vulnerability_assessment_rule_baseline.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_database_vulnerability_assessment_rule_baseline) | resource |
-| [azurerm_mssql_elasticpool.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_elasticpool) | resource |
-| [azurerm_mssql_failover_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_failover_group) | resource |
-| [azurerm_mssql_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_firewall_rule) | resource |
-| [azurerm_mssql_job_agent.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_job_agent) | resource |
-| [azurerm_mssql_job_credential.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_job_credential) | resource |
-| [azurerm_mssql_managed_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_managed_database) | resource |
-| [azurerm_mssql_managed_instance.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_managed_instance) | resource |
-| [azurerm_mssql_managed_instance_active_directory_administrator.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_managed_instance_active_directory_administrator) | resource |
-| [azurerm_mssql_managed_instance_failover_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_managed_instance_failover_group) | resource |
-| [azurerm_mssql_managed_instance_security_alert_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_managed_instance_security_alert_policy) | resource |
-| [azurerm_mssql_managed_instance_transparent_data_encryption.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_managed_instance_transparent_data_encryption) | resource |
-| [azurerm_mssql_managed_instance_vulnerability_assessment.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_managed_instance_vulnerability_assessment) | resource |
-| [azurerm_mssql_outbound_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_outbound_firewall_rule) | resource |
-| [azurerm_mssql_server.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_server) | resource |
-| [azurerm_mssql_server_dns_alias.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_server_dns_alias) | resource |
-| [azurerm_mssql_server_extended_auditing_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_server_extended_auditing_policy) | resource |
-| [azurerm_mssql_server_microsoft_support_auditing_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_server_microsoft_support_auditing_policy) | resource |
-| [azurerm_mssql_server_security_alert_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_server_security_alert_policy) | resource |
-| [azurerm_mssql_server_transparent_data_encryption.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_server_transparent_data_encryption) | resource |
-| [azurerm_mssql_server_vulnerability_assessment.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_server_vulnerability_assessment) | resource |
-| [azurerm_mssql_virtual_machine.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_virtual_machine) | resource |
-| [azurerm_mssql_virtual_machine_availability_group_listener.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_virtual_machine_availability_group_listener) | resource |
-| [azurerm_mssql_virtual_machine_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_virtual_machine_group) | resource |
-| [azurerm_mssql_virtual_network_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mssql_virtual_network_rule) | resource |
-| [azurerm_mysql_flexible_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mysql_flexible_database) | resource |
-| [azurerm_mysql_flexible_server.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mysql_flexible_server) | resource |
-| [azurerm_mysql_flexible_server_active_directory_administrator.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mysql_flexible_server_active_directory_administrator) | resource |
-| [azurerm_mysql_flexible_server_configuration.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mysql_flexible_server_configuration) | resource |
-| [azurerm_mysql_flexible_server_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/resources/mysql_flexible_server_firewall_rule) | resource |
+| [azurerm_mssql_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_database) | resource |
+| [azurerm_mssql_database_extended_auditing_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_database_extended_auditing_policy) | resource |
+| [azurerm_mssql_database_vulnerability_assessment_rule_baseline.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_database_vulnerability_assessment_rule_baseline) | resource |
+| [azurerm_mssql_elasticpool.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_elasticpool) | resource |
+| [azurerm_mssql_failover_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_failover_group) | resource |
+| [azurerm_mssql_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_firewall_rule) | resource |
+| [azurerm_mssql_job_agent.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_job_agent) | resource |
+| [azurerm_mssql_job_credential.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_job_credential) | resource |
+| [azurerm_mssql_managed_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_managed_database) | resource |
+| [azurerm_mssql_managed_instance.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_managed_instance) | resource |
+| [azurerm_mssql_managed_instance_active_directory_administrator.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_managed_instance_active_directory_administrator) | resource |
+| [azurerm_mssql_managed_instance_failover_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_managed_instance_failover_group) | resource |
+| [azurerm_mssql_managed_instance_security_alert_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_managed_instance_security_alert_policy) | resource |
+| [azurerm_mssql_managed_instance_transparent_data_encryption.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_managed_instance_transparent_data_encryption) | resource |
+| [azurerm_mssql_managed_instance_vulnerability_assessment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_managed_instance_vulnerability_assessment) | resource |
+| [azurerm_mssql_outbound_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_outbound_firewall_rule) | resource |
+| [azurerm_mssql_server.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server) | resource |
+| [azurerm_mssql_server_dns_alias.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server_dns_alias) | resource |
+| [azurerm_mssql_server_extended_auditing_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server_extended_auditing_policy) | resource |
+| [azurerm_mssql_server_microsoft_support_auditing_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server_microsoft_support_auditing_policy) | resource |
+| [azurerm_mssql_server_security_alert_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server_security_alert_policy) | resource |
+| [azurerm_mssql_server_transparent_data_encryption.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server_transparent_data_encryption) | resource |
+| [azurerm_mssql_server_vulnerability_assessment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server_vulnerability_assessment) | resource |
+| [azurerm_mssql_virtual_machine.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_virtual_machine) | resource |
+| [azurerm_mssql_virtual_machine_availability_group_listener.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_virtual_machine_availability_group_listener) | resource |
+| [azurerm_mssql_virtual_machine_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_virtual_machine_group) | resource |
+| [azurerm_mssql_virtual_network_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_virtual_network_rule) | resource |
+| [azurerm_mysql_flexible_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_database) | resource |
+| [azurerm_mysql_flexible_server.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server) | resource |
+| [azurerm_mysql_flexible_server_active_directory_administrator.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_active_directory_administrator) | resource |
+| [azurerm_mysql_flexible_server_configuration.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_configuration) | resource |
+| [azurerm_mysql_flexible_server_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mysql_flexible_server_firewall_rule) | resource |
+| [azurerm_postgresql_active_directory_administrator.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_active_directory_administrator) | resource |
+| [azurerm_postgresql_configuration.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_configuration) | resource |
+| [azurerm_postgresql_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_database) | resource |
+| [azurerm_postgresql_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_firewall_rule) | resource |
+| [azurerm_postgresql_flexible_server.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server) | resource |
+| [azurerm_postgresql_flexible_server_active_directory_administrator.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_active_directory_administrator) | resource |
+| [azurerm_postgresql_flexible_server_configuration.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_configuration) | resource |
+| [azurerm_postgresql_flexible_server_database.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_database) | resource |
+| [azurerm_postgresql_flexible_server_firewall_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_firewall_rule) | resource |
+| [azurerm_postgresql_flexible_server_virtual_endpoint.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server_virtual_endpoint) | resource |
+| [azurerm_postgresql_server.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server) | resource |
+| [azurerm_postgresql_server_key.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_server_key) | resource |
+| [azurerm_postgresql_virtual_network_rule.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_virtual_network_rule) | resource |
+| [azuread_service_principal.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
 | [azuread_user.this](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/user) | data source |
-| [azurerm_client_config.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/client_config) | data source |
-| [azurerm_key_vault.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/key_vault) | data source |
-| [azurerm_key_vault_key.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/key_vault_key) | data source |
-| [azurerm_lb.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/lb) | data source |
-| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/resource_group) | data source |
-| [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/storage_account) | data source |
-| [azurerm_storage_container.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/storage_container) | data source |
-| [azurerm_subnet.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/subnet) | data source |
-| [azurerm_subscription.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/subscription) | data source |
-| [azurerm_user_assigned_identity.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/user_assigned_identity) | data source |
-| [azurerm_virtual_machine.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/virtual_machine) | data source |
-| [azurerm_virtual_network.this](https://registry.terraform.io/providers/hashicorp/azurerm/4.14.0/docs/data-sources/virtual_network) | data source |
+| [azurerm_client_config.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
+| [azurerm_key_vault.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/key_vault) | data source |
+| [azurerm_key_vault_key.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/key_vault_key) | data source |
+| [azurerm_lb.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/lb) | data source |
+| [azurerm_private_dns_zone.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/private_dns_zone) | data source |
+| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
+| [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/storage_account) | data source |
+| [azurerm_storage_container.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/storage_container) | data source |
+| [azurerm_subnet.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
+| [azurerm_subscription.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
+| [azurerm_user_assigned_identity.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/user_assigned_identity) | data source |
+| [azurerm_virtual_machine.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/virtual_machine) | data source |
+| [azurerm_virtual_network.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/virtual_network) | data source |
 
 ## Inputs
 
@@ -109,6 +126,20 @@
 | <a name="input_mysql_flexible_server_active_directory_administrator"></a> [mysql\_flexible\_server\_active\_directory\_administrator](#input\_mysql\_flexible\_server\_active\_directory\_administrator) | n/a | <pre>list(object({<br/>    id        = any<br/>    login     = string<br/>    server_id = any<br/>  }))</pre> | `[]` | no |
 | <a name="input_mysql_flexible_server_configuration"></a> [mysql\_flexible\_server\_configuration](#input\_mysql\_flexible\_server\_configuration) | n/a | <pre>list(object({<br/>    id        = any<br/>    name      = string<br/>    server_id = any<br/>    value     = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_mysql_flexible_server_firewall_rule"></a> [mysql\_flexible\_server\_firewall\_rule](#input\_mysql\_flexible\_server\_firewall\_rule) | n/a | <pre>list(object({<br/>    id               = any<br/>    end_ip_address   = string<br/>    name             = string<br/>    server_name      = any<br/>    start_ip_address = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_active_directory_administrator"></a> [postgresql\_active\_directory\_administrator](#input\_postgresql\_active\_directory\_administrator) | n/a | <pre>list(object({<br/>    id        = any<br/>    login     = string<br/>    server_id = any<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_configuration"></a> [postgresql\_configuration](#input\_postgresql\_configuration) | n/a | <pre>list(object({<br/>    id        = any<br/>    name      = string<br/>    server_id = any<br/>    value     = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_database"></a> [postgresql\_database](#input\_postgresql\_database) | n/a | <pre>list(object({<br/>    id        = any<br/>    charset   = string<br/>    collation = string<br/>    name      = string<br/>    server_id = any<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_firewall_rule"></a> [postgresql\_firewall\_rule](#input\_postgresql\_firewall\_rule) | n/a | <pre>list(object({<br/>    id               = any<br/>    end_ip_address   = string<br/>    name             = string<br/>    server_id        = any<br/>    start_ip_address = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_flexible_server"></a> [postgresql\_flexible\_server](#input\_postgresql\_flexible\_server) | n/a | <pre>list(object({<br/>    id                                = any<br/>    name                              = string<br/>    administrator_login               = optional(string)<br/>    administrator_password            = optional(string)<br/>    backup_retention_days             = optional(number)<br/>    geo_redundant_backup_enabled      = optional(bool)<br/>    create_mode                       = optional(string)<br/>    public_network_access_enabled     = optional(bool)<br/>    point_in_time_restore_time_in_utc = optional(string)<br/>    replication_role                  = optional(string)<br/>    sku_name                          = optional(string)<br/>    source_server_id                  = optional(any)<br/>    auto_grow_enabled                 = optional(bool)<br/>    storage_mb                        = optional(number)<br/>    storage_tier                      = optional(string)<br/>    tags                              = optional(map(string))<br/>    version                           = optional(string)<br/>    zone                              = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_flexible_server_active_directory_administrator"></a> [postgresql\_flexible\_server\_active\_directory\_administrator](#input\_postgresql\_flexible\_server\_active\_directory\_administrator) | n/a | <pre>list(object({<br/>    id             = any<br/>    principal_type = string<br/>    server_id      = any<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_flexible_server_configuration"></a> [postgresql\_flexible\_server\_configuration](#input\_postgresql\_flexible\_server\_configuration) | n/a | <pre>list(object({<br/>    id        = any<br/>    name      = string<br/>    server_id = any<br/>    value     = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_flexible_server_database"></a> [postgresql\_flexible\_server\_database](#input\_postgresql\_flexible\_server\_database) | n/a | <pre>list(object({<br/>    id        = any<br/>    name      = string<br/>    server_id = any<br/>    charset   = optional(string)<br/>    collation = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_flexible_server_firewall_rule"></a> [postgresql\_flexible\_server\_firewall\_rule](#input\_postgresql\_flexible\_server\_firewall\_rule) | n/a | <pre>list(object({<br/>    id               = any<br/>    end_ip_address   = string<br/>    name             = string<br/>    server_id        = any<br/>    start_ip_address = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_flexible_server_virtual_endpoint"></a> [postgresql\_flexible\_server\_virtual\_endpoint](#input\_postgresql\_flexible\_server\_virtual\_endpoint) | n/a | <pre>list(object({<br/>    id                = any<br/>    name              = string<br/>    replica_server_id = any<br/>    source_server_id  = any<br/>    type              = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_server"></a> [postgresql\_server](#input\_postgresql\_server) | n/a | <pre>list(object({<br/>    id                                = any<br/>    name                              = string<br/>    sku_name                          = string<br/>    ssl_enforcement_enabled           = bool<br/>    version                           = string<br/>    administrator_login               = optional(string)<br/>    administrator_login_password      = optional(string)<br/>    auto_grow_enabled                 = optional(bool)<br/>    backup_retention_days             = optional(number)<br/>    create_mode                       = optional(string)<br/>    creation_source_server_id         = optional(any)<br/>    geo_redundant_backup_enabled      = optional(bool)<br/>    infrastructure_encryption_enabled = optional(bool)<br/>    public_network_access_enabled     = optional(bool)<br/>    restore_point_in_time             = optional(string)<br/>    ssl_minimal_tls_version_enforced  = optional(string)<br/>    storage_mb                        = optional(number)<br/>    tags                              = optional(map(string))<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_server_key"></a> [postgresql\_server\_key](#input\_postgresql\_server\_key) | n/a | <pre>list(object({<br/>    id               = any<br/>    key_vault_key_id = any<br/>    server_id        = any<br/>  }))</pre> | `[]` | no |
+| <a name="input_postgresql_virtual_network_rule"></a> [postgresql\_virtual\_network\_rule](#input\_postgresql\_virtual\_network\_rule) | n/a | <pre>list(object({<br/>    id        = any<br/>    name      = string<br/>    server_id = any<br/>  }))</pre> | `[]` | no |
+| <a name="input_private_dns_zone_name"></a> [private\_dns\_zone\_name](#input\_private\_dns\_zone\_name) | n/a | `string` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | n/a | `string` | n/a | yes |
 | <a name="input_storage_account"></a> [storage\_account](#input\_storage\_account) | n/a | `any` | `[]` | no |
 | <a name="input_storage_account_name"></a> [storage\_account\_name](#input\_storage\_account\_name) | n/a | `string` | `null` | no |
@@ -174,6 +205,40 @@
 | <a name="output_azurerm_mysql_flexible_server_configuration_name"></a> [azurerm\_mysql\_flexible\_server\_configuration\_name](#output\_azurerm\_mysql\_flexible\_server\_configuration\_name) | n/a |
 | <a name="output_azurerm_mysql_flexible_server_firewall_rule_id"></a> [azurerm\_mysql\_flexible\_server\_firewall\_rule\_id](#output\_azurerm\_mysql\_flexible\_server\_firewall\_rule\_id) | azurerm\_mysql\_flexible\_server\_firewall\_rule |
 | <a name="output_azurerm_mysql_flexible_server_firewall_rule_name"></a> [azurerm\_mysql\_flexible\_server\_firewall\_rule\_name](#output\_azurerm\_mysql\_flexible\_server\_firewall\_rule\_name) | n/a |
+| <a name="output_azurerm_mysql_flexible_server_fqdn"></a> [azurerm\_mysql\_flexible\_server\_fqdn](#output\_azurerm\_mysql\_flexible\_server\_fqdn) | n/a |
 | <a name="output_azurerm_mysql_flexible_server_id"></a> [azurerm\_mysql\_flexible\_server\_id](#output\_azurerm\_mysql\_flexible\_server\_id) | azurerm\_mysql\_flexible\_server |
+| <a name="output_azurerm_mysql_flexible_server_login"></a> [azurerm\_mysql\_flexible\_server\_login](#output\_azurerm\_mysql\_flexible\_server\_login) | n/a |
 | <a name="output_azurerm_mysql_flexible_server_name"></a> [azurerm\_mysql\_flexible\_server\_name](#output\_azurerm\_mysql\_flexible\_server\_name) | n/a |
+| <a name="output_azurerm_mysql_flexible_server_password"></a> [azurerm\_mysql\_flexible\_server\_password](#output\_azurerm\_mysql\_flexible\_server\_password) | n/a |
+| <a name="output_azurerm_postgresql_active_directory_administrator_id"></a> [azurerm\_postgresql\_active\_directory\_administrator\_id](#output\_azurerm\_postgresql\_active\_directory\_administrator\_id) | azurerm\_postgresql\_active\_directory\_administrator |
+| <a name="output_azurerm_postgresql_active_directory_administrator_name"></a> [azurerm\_postgresql\_active\_directory\_administrator\_name](#output\_azurerm\_postgresql\_active\_directory\_administrator\_name) | n/a |
+| <a name="output_azurerm_postgresql_configuration_id"></a> [azurerm\_postgresql\_configuration\_id](#output\_azurerm\_postgresql\_configuration\_id) | azurerm\_postgresql\_configuration |
+| <a name="output_azurerm_postgresql_configuration_name"></a> [azurerm\_postgresql\_configuration\_name](#output\_azurerm\_postgresql\_configuration\_name) | n/a |
+| <a name="output_azurerm_postgresql_database_id"></a> [azurerm\_postgresql\_database\_id](#output\_azurerm\_postgresql\_database\_id) | azurerm\_postgresql\_database |
+| <a name="output_azurerm_postgresql_database_name"></a> [azurerm\_postgresql\_database\_name](#output\_azurerm\_postgresql\_database\_name) | n/a |
+| <a name="output_azurerm_postgresql_firewall_rule_id"></a> [azurerm\_postgresql\_firewall\_rule\_id](#output\_azurerm\_postgresql\_firewall\_rule\_id) | azurerm\_postgresql\_firewall\_rule |
+| <a name="output_azurerm_postgresql_firewall_rule_name"></a> [azurerm\_postgresql\_firewall\_rule\_name](#output\_azurerm\_postgresql\_firewall\_rule\_name) | n/a |
+| <a name="output_azurerm_postgresql_flexible_name"></a> [azurerm\_postgresql\_flexible\_name](#output\_azurerm\_postgresql\_flexible\_name) | n/a |
+| <a name="output_azurerm_postgresql_flexible_name_fqdn"></a> [azurerm\_postgresql\_flexible\_name\_fqdn](#output\_azurerm\_postgresql\_flexible\_name\_fqdn) | n/a |
+| <a name="output_azurerm_postgresql_flexible_name_login"></a> [azurerm\_postgresql\_flexible\_name\_login](#output\_azurerm\_postgresql\_flexible\_name\_login) | n/a |
+| <a name="output_azurerm_postgresql_flexible_name_password"></a> [azurerm\_postgresql\_flexible\_name\_password](#output\_azurerm\_postgresql\_flexible\_name\_password) | n/a |
+| <a name="output_azurerm_postgresql_flexible_server_active_directory_administrator_id"></a> [azurerm\_postgresql\_flexible\_server\_active\_directory\_administrator\_id](#output\_azurerm\_postgresql\_flexible\_server\_active\_directory\_administrator\_id) | azurerm\_postgresql\_flexible\_server\_active\_directory\_administrator |
+| <a name="output_azurerm_postgresql_flexible_server_active_directory_administrator_name"></a> [azurerm\_postgresql\_flexible\_server\_active\_directory\_administrator\_name](#output\_azurerm\_postgresql\_flexible\_server\_active\_directory\_administrator\_name) | n/a |
+| <a name="output_azurerm_postgresql_flexible_server_configuration_id"></a> [azurerm\_postgresql\_flexible\_server\_configuration\_id](#output\_azurerm\_postgresql\_flexible\_server\_configuration\_id) | azurerm\_postgresql\_flexible\_server\_configuration |
+| <a name="output_azurerm_postgresql_flexible_server_configuration_name"></a> [azurerm\_postgresql\_flexible\_server\_configuration\_name](#output\_azurerm\_postgresql\_flexible\_server\_configuration\_name) | n/a |
+| <a name="output_azurerm_postgresql_flexible_server_database_id"></a> [azurerm\_postgresql\_flexible\_server\_database\_id](#output\_azurerm\_postgresql\_flexible\_server\_database\_id) | azurerm\_postgresql\_flexible\_server\_database |
+| <a name="output_azurerm_postgresql_flexible_server_database_name"></a> [azurerm\_postgresql\_flexible\_server\_database\_name](#output\_azurerm\_postgresql\_flexible\_server\_database\_name) | n/a |
+| <a name="output_azurerm_postgresql_flexible_server_firewall_rule_id"></a> [azurerm\_postgresql\_flexible\_server\_firewall\_rule\_id](#output\_azurerm\_postgresql\_flexible\_server\_firewall\_rule\_id) | azurerm\_postgresql\_flexible\_server\_firewall\_rule |
+| <a name="output_azurerm_postgresql_flexible_server_firewall_rule_name"></a> [azurerm\_postgresql\_flexible\_server\_firewall\_rule\_name](#output\_azurerm\_postgresql\_flexible\_server\_firewall\_rule\_name) | n/a |
+| <a name="output_azurerm_postgresql_flexible_server_id"></a> [azurerm\_postgresql\_flexible\_server\_id](#output\_azurerm\_postgresql\_flexible\_server\_id) | azurerm\_postgresql\_flexible\_server |
+| <a name="output_azurerm_postgresql_flexible_server_virtual_endpoint_id"></a> [azurerm\_postgresql\_flexible\_server\_virtual\_endpoint\_id](#output\_azurerm\_postgresql\_flexible\_server\_virtual\_endpoint\_id) | azurerm\_postgresql\_flexible\_server\_virtual\_endpoint |
+| <a name="output_azurerm_postgresql_flexible_server_virtual_endpoint_name"></a> [azurerm\_postgresql\_flexible\_server\_virtual\_endpoint\_name](#output\_azurerm\_postgresql\_flexible\_server\_virtual\_endpoint\_name) | n/a |
+| <a name="output_azurerm_postgresql_server_id"></a> [azurerm\_postgresql\_server\_id](#output\_azurerm\_postgresql\_server\_id) | azurerm\_postgresql\_server |
+| <a name="output_azurerm_postgresql_server_key_id"></a> [azurerm\_postgresql\_server\_key\_id](#output\_azurerm\_postgresql\_server\_key\_id) | azurerm\_postgresql\_server\_key |
+| <a name="output_azurerm_postgresql_server_name"></a> [azurerm\_postgresql\_server\_name](#output\_azurerm\_postgresql\_server\_name) | n/a |
+| <a name="output_azurerm_postgresql_server_name_fqdn"></a> [azurerm\_postgresql\_server\_name\_fqdn](#output\_azurerm\_postgresql\_server\_name\_fqdn) | n/a |
+| <a name="output_azurerm_postgresql_server_name_login"></a> [azurerm\_postgresql\_server\_name\_login](#output\_azurerm\_postgresql\_server\_name\_login) | n/a |
+| <a name="output_azurerm_postgresql_server_name_password"></a> [azurerm\_postgresql\_server\_name\_password](#output\_azurerm\_postgresql\_server\_name\_password) | n/a |
+| <a name="output_azurerm_postgresql_virtual_network_rule_id"></a> [azurerm\_postgresql\_virtual\_network\_rule\_id](#output\_azurerm\_postgresql\_virtual\_network\_rule\_id) | azurerm\_postgresql\_virtual\_network\_rule |
+| <a name="output_azurerm_postgresql_virtual_network_rule_name"></a> [azurerm\_postgresql\_virtual\_network\_rule\_name](#output\_azurerm\_postgresql\_virtual\_network\_rule\_name) | n/a |
 | <a name="output_mssql_server_fully_qualified_domain_name"></a> [mssql\_server\_fully\_qualified\_domain\_name](#output\_mssql\_server\_fully\_qualified\_domain\_name) | n/a |

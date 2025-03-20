@@ -53,6 +53,11 @@ variable "lb_name" {
   default = null
 }
 
+variable "private_dns_zone_name" {
+  type    = string
+  default = null
+}
+
 ## MODULES
 
 variable "keyvault" {
@@ -642,6 +647,165 @@ variable "mysql_flexible_server_firewall_rule" {
     name             = string
     server_name      = any
     start_ip_address = string
+  }))
+  default = []
+}
+
+variable "postgresql_active_directory_administrator" {
+  type = list(object({
+    id        = any
+    login     = string
+    server_id = any
+  }))
+  default = []
+}
+
+variable "postgresql_configuration" {
+  type = list(object({
+    id        = any
+    name      = string
+    server_id = any
+    value     = string
+  }))
+  default = []
+}
+
+variable "postgresql_database" {
+  type = list(object({
+    id        = any
+    charset   = string
+    collation = string
+    name      = string
+    server_id = any
+  }))
+  default = []
+}
+
+variable "postgresql_firewall_rule" {
+  type = list(object({
+    id               = any
+    end_ip_address   = string
+    name             = string
+    server_id        = any
+    start_ip_address = string
+  }))
+  default = []
+}
+
+variable "postgresql_flexible_server" {
+  type = list(object({
+    id                                = any
+    name                              = string
+    administrator_login               = optional(string)
+    administrator_password            = optional(string)
+    backup_retention_days             = optional(number)
+    geo_redundant_backup_enabled      = optional(bool)
+    create_mode                       = optional(string)
+    public_network_access_enabled     = optional(bool)
+    point_in_time_restore_time_in_utc = optional(string)
+    replication_role                  = optional(string)
+    sku_name                          = optional(string)
+    source_server_id                  = optional(any)
+    auto_grow_enabled                 = optional(bool)
+    storage_mb                        = optional(number)
+    storage_tier                      = optional(string)
+    tags                              = optional(map(string))
+    version                           = optional(string)
+    zone                              = optional(string)
+  }))
+  default = []
+}
+
+variable "postgresql_flexible_server_active_directory_administrator" {
+  type = list(object({
+    id             = any
+    principal_type = string
+    server_id      = any
+  }))
+  default = []
+}
+
+variable "postgresql_flexible_server_configuration" {
+  type = list(object({
+    id        = any
+    name      = string
+    server_id = any
+    value     = string
+  }))
+  default = []
+}
+
+variable "postgresql_flexible_server_database" {
+  type = list(object({
+    id        = any
+    name      = string
+    server_id = any
+    charset   = optional(string)
+    collation = optional(string)
+  }))
+  default = []
+}
+
+variable "postgresql_flexible_server_firewall_rule" {
+  type = list(object({
+    id               = any
+    end_ip_address   = string
+    name             = string
+    server_id        = any
+    start_ip_address = string
+  }))
+  default = []
+}
+
+variable "postgresql_flexible_server_virtual_endpoint" {
+  type = list(object({
+    id                = any
+    name              = string
+    replica_server_id = any
+    source_server_id  = any
+    type              = string
+  }))
+  default = []
+}
+
+variable "postgresql_server" {
+  type = list(object({
+    id                                = any
+    name                              = string
+    sku_name                          = string
+    ssl_enforcement_enabled           = bool
+    version                           = string
+    administrator_login               = optional(string)
+    administrator_login_password      = optional(string)
+    auto_grow_enabled                 = optional(bool)
+    backup_retention_days             = optional(number)
+    create_mode                       = optional(string)
+    creation_source_server_id         = optional(any)
+    geo_redundant_backup_enabled      = optional(bool)
+    infrastructure_encryption_enabled = optional(bool)
+    public_network_access_enabled     = optional(bool)
+    restore_point_in_time             = optional(string)
+    ssl_minimal_tls_version_enforced  = optional(string)
+    storage_mb                        = optional(number)
+    tags                              = optional(map(string))
+  }))
+  default = []
+}
+
+variable "postgresql_server_key" {
+  type = list(object({
+    id               = any
+    key_vault_key_id = any
+    server_id        = any
+  }))
+  default = []
+}
+
+variable "postgresql_virtual_network_rule" {
+  type = list(object({
+    id        = any
+    name      = string
+    server_id = any
   }))
   default = []
 }

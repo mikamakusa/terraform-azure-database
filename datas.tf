@@ -1,6 +1,16 @@
+terraform {
+  required_providers {
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "3.0.2"
+    }
+  }
+}
 data "azurerm_resource_group" "this" {
   name = var.resource_group_name
 }
+
+data "azuread_service_principal" "this" {}
 
 data "azurerm_client_config" "this" {}
 
@@ -29,6 +39,10 @@ data "azurerm_subnet" "this" {
   name                 = var.subnet_name
   virtual_network_name = data.azurerm_virtual_network.this.name
   resource_group_name  = data.azurerm_resource_group.this.name
+}
+
+data "azurerm_private_dns_zone" "this" {
+  name = ""
 }
 
 data "azuread_user" "this" {

@@ -198,6 +198,21 @@ output "azurerm_mysql_flexible_server_id" {
 output "azurerm_mysql_flexible_server_name" {
   value = try(azurerm_mysql_flexible_server.this.*.name)
 }
+
+output "azurerm_mysql_flexible_server_login" {
+  value     = try(azurerm_mysql_flexible_server.this.*.administrator_login)
+  sensitive = true
+}
+
+output "azurerm_mysql_flexible_server_password" {
+  value     = try(azurerm_mysql_flexible_server.this.*.administrator_password)
+  sensitive = true
+}
+
+output "azurerm_mysql_flexible_server_fqdn" {
+  value     = try(azurerm_mysql_flexible_server.this.*.fqdn)
+}
+
 # azurerm_mysql_flexible_server_active_directory_administrator
 output "azurerm_mysql_flexible_server_active_directory_administrator_id" {
   value = try(azurerm_mysql_flexible_server_active_directory_administrator.this.*.id)
@@ -217,4 +232,144 @@ output "azurerm_mysql_flexible_server_firewall_rule_id" {
 
 output "azurerm_mysql_flexible_server_firewall_rule_name" {
   value = try(azurerm_mysql_flexible_server_firewall_rule.this.*.name)
+}
+# azurerm_postgresql_active_directory_administrator
+output "azurerm_postgresql_active_directory_administrator_id" {
+  value = try(azurerm_postgresql_active_directory_administrator.this.*.id)
+}
+
+output "azurerm_postgresql_active_directory_administrator_name" {
+  value = try(azurerm_postgresql_active_directory_administrator.this.*.server_name)
+}
+
+# azurerm_postgresql_configuration
+output "azurerm_postgresql_configuration_id" {
+  value = try(azurerm_postgresql_configuration.this.*.id)
+}
+
+output "azurerm_postgresql_configuration_name" {
+  value = try(azurerm_postgresql_configuration.this.*.server_name)
+}
+
+# azurerm_postgresql_database
+output "azurerm_postgresql_database_id" {
+  value = try(azurerm_postgresql_database.this.*.id)
+}
+
+output "azurerm_postgresql_database_name" {
+  value = try(azurerm_postgresql_database.this.*.server_name)
+}
+
+# azurerm_postgresql_firewall_rule
+output "azurerm_postgresql_firewall_rule_id" {
+  value = try(azurerm_postgresql_firewall_rule.this.*.id)
+}
+
+output "azurerm_postgresql_firewall_rule_name" {
+  value = try(azurerm_postgresql_firewall_rule.this.*.server_name)
+}
+
+# azurerm_postgresql_flexible_server
+output "azurerm_postgresql_flexible_server_id" {
+  value = try(azurerm_postgresql_flexible_server.this.*.id)
+}
+
+output "azurerm_postgresql_flexible_name" {
+  value = try(azurerm_postgresql_flexible_server.this.*.name)
+}
+
+output "azurerm_postgresql_flexible_name_login" {
+  value     = try(azurerm_postgresql_flexible_server.this.*.administrator_login)
+  sensitive = true
+}
+
+output "azurerm_postgresql_flexible_name_password" {
+  value     = try(azurerm_postgresql_flexible_server.this.*.administrator_password)
+  sensitive = true
+}
+
+output "azurerm_postgresql_flexible_name_fqdn" {
+  value     = try(azurerm_postgresql_flexible_server.this.*.fqdn)
+}
+
+# azurerm_postgresql_flexible_server_active_directory_administrator
+output "azurerm_postgresql_flexible_server_active_directory_administrator_id" {
+  value = try(azurerm_postgresql_flexible_server_active_directory_administrator.this.*.id)
+}
+
+output "azurerm_postgresql_flexible_server_active_directory_administrator_name" {
+  value = try(azurerm_postgresql_flexible_server_active_directory_administrator.this.*.server_name)
+}
+
+# azurerm_postgresql_flexible_server_configuration
+output "azurerm_postgresql_flexible_server_configuration_id" {
+  value = try(azurerm_postgresql_flexible_server_configuration.this.*.id)
+}
+
+output "azurerm_postgresql_flexible_server_configuration_name" {
+  value = try(azurerm_postgresql_flexible_server_configuration.this.*.name)
+}
+
+# azurerm_postgresql_flexible_server_database
+output "azurerm_postgresql_flexible_server_database_id" {
+  value = try(azurerm_postgresql_flexible_server_database.this.*.id)
+}
+
+output "azurerm_postgresql_flexible_server_database_name" {
+  value = try(azurerm_postgresql_flexible_server_database.this.*.name)
+}
+
+# azurerm_postgresql_flexible_server_firewall_rule
+output "azurerm_postgresql_flexible_server_firewall_rule_id" {
+  value = try(azurerm_postgresql_flexible_server_firewall_rule.this.*.id)
+}
+
+output "azurerm_postgresql_flexible_server_firewall_rule_name" {
+  value = try(azurerm_postgresql_flexible_server_firewall_rule.this.*.name)
+}
+
+# azurerm_postgresql_flexible_server_virtual_endpoint
+output "azurerm_postgresql_flexible_server_virtual_endpoint_id" {
+  value = try(azurerm_postgresql_flexible_server_virtual_endpoint.this.*.id)
+}
+
+output "azurerm_postgresql_flexible_server_virtual_endpoint_name" {
+  value = try(azurerm_postgresql_flexible_server_virtual_endpoint.this.*.name)
+}
+
+# azurerm_postgresql_server
+output "azurerm_postgresql_server_id" {
+  value = try(azurerm_postgresql_server.this.*.id)
+}
+
+output "azurerm_postgresql_server_name" {
+  value = try(azurerm_postgresql_server.this.*.name)
+}
+
+output "azurerm_postgresql_server_name_login" {
+  value     = try(azurerm_postgresql_server.this.*.administrator_login)
+  sensitive = true
+}
+
+output "azurerm_postgresql_server_name_password" {
+  value     = try(azurerm_postgresql_server.this.*.administrator_login_password)
+  sensitive = true
+}
+
+output "azurerm_postgresql_server_name_fqdn" {
+  value     = try(azurerm_postgresql_server.this.*.fqdn)
+}
+
+# azurerm_postgresql_server_key
+output "azurerm_postgresql_server_key_id" {
+  value = try(azurerm_postgresql_server_key.this.*.id)
+}
+
+# azurerm_postgresql_virtual_network_rule
+output "azurerm_postgresql_virtual_network_rule_id" {
+  value = try(azurerm_postgresql_virtual_network_rule.this.*.id)
+}
+
+output "azurerm_postgresql_virtual_network_rule_name" {
+  value = try(azurerm_postgresql_virtual_network_rule.this.*.server_name)
 }
